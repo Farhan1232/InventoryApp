@@ -1,0 +1,114 @@
+@model InventoryApp.Models.Product
+
+@{
+    ViewData["Title"] = "Add Product";
+}
+
+<!-- Bootstrap 5 CSS CDN -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+<style>
+    body {
+        background: linear-gradient(135deg, #e0f7fa 0%, #80deea 100%);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #222;
+        padding: 3rem 1rem;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    form {
+        background: #fff;
+        max-width: 600px;
+        width: 100%;
+        padding: 3rem 2.5rem;
+        border-radius: 1.25rem;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.4s ease;
+    }
+    form:hover {
+        box-shadow: 0 30px 50px rgba(0, 0, 0, 0.15);
+    }
+    h2 {
+        font-weight: 800;
+        font-size: 2.75rem;
+        text-align: center;
+        margin-bottom: 2.5rem;
+        color: #00796b;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+        text-shadow: 1px 1px 3px #b2dfdb;
+    }
+    .form-group {
+        margin-bottom: 1.75rem;
+    }
+    label {
+        font-weight: 600;
+        color: #004d40;
+        display: block;
+        margin-bottom: 0.5rem;
+        font-size: 1.1rem;
+    }
+    input.form-control, textarea.form-control {
+        border-radius: 0.75rem;
+        border: 2px solid #b2dfdb;
+        padding: 0.75rem 1.25rem;
+        font-size: 1.1rem;
+        box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    input.form-control:focus, textarea.form-control:focus {
+        border-color: #00796b;
+        box-shadow: 0 0 10px #00796b66;
+        outline: none;
+    }
+    .text-danger {
+        font-size: 0.9rem;
+        margin-top: 0.3rem;
+        color: #d32f2f;
+        font-weight: 600;
+    }
+    input[type="submit"] {
+        width: 100%;
+        background: linear-gradient(45deg, #004d40, #00796b);
+        border: none;
+        color: white;
+        font-weight: 700;
+        font-size: 1.3rem;
+        padding: 0.9rem 0;
+        border-radius: 1rem;
+        cursor: pointer;
+        box-shadow: 0 6px 15px rgba(0, 121, 107, 0.6);
+        transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+    input[type="submit"]:hover {
+        background: linear-gradient(45deg, #00796b, #004d40);
+        box-shadow: 0 8px 20px rgba(0, 121, 107, 0.8);
+    }
+</style>
+
+<form asp-action="Create" novalidate>
+    <h2>Add Product</h2>
+    <div class="form-group">
+        <label asp-for="Name" class="control-label"></label>
+        <input asp-for="Name" class="form-control" placeholder="Enter product name" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Quantity" class="control-label"></label>
+        <input asp-for="Quantity" class="form-control" placeholder="Enter quantity available" />
+        <span asp-validation-for="Quantity" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Price" class="control-label"></label>
+        <input asp-for="Price" class="form-control" placeholder="Enter price per unit" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description" class="control-label"></label>
+        <textarea asp-for="Description" class="form-control" rows="4" placeholder="Enter product description"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <input type="submit" value="Add Product" />
+</form>

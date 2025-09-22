@@ -1,0 +1,132 @@
+@model InventoryApp.Models.Product
+
+@{
+    ViewData["Title"] = "Delete Product";
+}
+
+<!-- Bootstrap 5 CSS CDN -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+<style>
+    body {
+        background: linear-gradient(135deg, #f0f4ff 0%, #d9e4ff 100%);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        padding: 3rem 1rem;
+        color: #2c3e50;
+    }
+    h2 {
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 1rem;
+        color: #34495e;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+    h3 {
+        text-align: center;
+        margin-bottom: 2rem;
+        font-weight: 500;
+        color: #7f8c8d;
+        font-style: italic;
+    }
+    .card {
+        max-width: 600px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 1.25rem;
+        box-shadow: 0 10px 35px rgba(46, 61, 73, 0.15);
+        padding: 2.5rem 3rem;
+        transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
+    .card:hover {
+        box-shadow: 0 15px 45px rgba(46, 61, 73, 0.25);
+        transform: translateY(-6px);
+    }
+    h4 {
+        color: #2c3e50;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        text-align: center;
+        letter-spacing: 0.05em;
+    }
+    hr {
+        border: none;
+        height: 1px;
+        background: linear-gradient(to right, transparent, #3498db, transparent);
+        margin-bottom: 2rem;
+    }
+    dl.row {
+        margin-bottom: 2.5rem;
+    }
+    dt.col-sm-2 {
+        font-weight: 600;
+        color: #2980b9;
+        padding-top: 0.3rem;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+    }
+    dd.col-sm-10 {
+        margin-bottom: 1.25rem;
+        font-size: 1.1rem;
+        color: #34495e;
+    }
+    form {
+        text-align: center;
+    }
+    input[type="submit"].btn-danger {
+        width: 140px;
+        font-weight: 700;
+        padding: 0.7rem 0;
+        border-radius: 0.75rem;
+        border: none;
+        background: #e74c3c;
+        box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+    }
+    input[type="submit"].btn-danger:hover {
+        background-color: #c0392b;
+        box-shadow: 0 6px 20px rgba(192, 57, 43, 0.6);
+    }
+    a {
+        margin-left: 1.5rem;
+        font-weight: 600;
+        color: #2980b9;
+        text-decoration: none;
+        font-size: 1.05rem;
+        transition: color 0.3s ease;
+        vertical-align: middle;
+    }
+    a:hover {
+        color: #1c5980;
+        text-decoration: underline;
+    }
+</style>
+
+<h2>Delete Product</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+
+<div class="card">
+    <h4>Product Details</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Name)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Name)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Quantity)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Quantity)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Price)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Price)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Description)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Description)</dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

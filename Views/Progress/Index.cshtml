@@ -1,0 +1,188 @@
+@using System.Text.Json
+@model List<InventoryApp.Models.ProgressViewModel>
+
+@{
+    ViewData["Title"] = "Progress Dashboard";
+}
+
+<!-- Bootstrap 5 CSS CDN -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+<style>
+    body {
+        background: #eef2f7;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    h2 {
+        text-align: center;
+        margin-top: 2rem;
+        font-weight: 700;
+        color: #212529;
+    }
+
+    .table-container {
+        max-width: 900px;
+        margin: 2rem auto;
+        background: #fff;
+        padding: 1.5rem;
+        border-radius: 0.8rem;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    table {
+        border-radius: 0.5rem;
+        overflow: hidden;
+    }
+
+    thead {
+        background-color: #0d6efd;
+        color: #fff;
+        font-weight: 600;
+    }
+
+    tbody tr:hover {
+        background-color: #e9f0ff;
+        transition: background-color 0.3s ease;
+        cursor: pointer;
+    }
+
+    hr {
+        max-width: 900px;
+        margin: 3rem auto 1rem auto;
+        border: 0;
+        height: 1px;
+        background: #ddd;
+    }
+
+    h3 {
+        max-width: 900px;
+        margin: 1rem auto 1.5rem auto;
+        color: #333;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    .chart-container {
+        max-width: 900px;
+        margin: 0 auto 3rem auto;
+        background: #fff;
+        padding: 2rem;
+        border-radius: 0.8rem;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    }
+</style>
+
+<div class="table-container">
+    <h2>@ViewData["Title"]</h2>
+
+    <!-- Table View -->
+    <table class="table table-striped table-hover text-center align-middle">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Added</th>
+                <th>Updated</th>
+                <th>Deleted</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.UserId</td>
+                    <td>@item.AddCount</td>
+                    <td>@item.UpdateCount</td>
+                    <td>@item.DeleteCount</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<hr />
+
+<div class="chart-container">
+    <h3>Progress Chart</h3>
+    <canvas id="progressChart" width="800" height="400"></canvas>
+</div>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const ctx = document.getElementById('progressChart').getContext('2d');
+    const chart = new Chart(ctx, {
+        type: 'bar', // still bar chart but horizontal stacked
+        data: {
+            labels: @Html.Raw(JsonSerializer.Serialize(Model.Select(m => m.UserId))),
+            datasets: [
+                {
+                    label: 'Added',
+                    data: @Html.Raw(JsonSerializer.Serialize(Model.Select(m => m.AddCount))),
+                    backgroundColor: 'rgba(13, 110, 253, 0.8)',  // Bootstrap primary color with more opacity
+                    borderRadius: 5,
+                },
+                {
+                    label: 'Updated',
+                    data: @Html.Raw(JsonSerializer.Serialize(Model.Select(m => m.UpdateCount))),
+                    backgroundColor: 'rgba(255, 193, 7, 0.8)',  // Bootstrap warning color
+                    borderRadius: 5,
+                },
+                {
+                    label: 'Deleted',
+                    data: @Html.Raw(JsonSerializer.Serialize(Model.Select(m => m.DeleteCount))),
+                    backgroundColor: 'rgba(220, 53, 69, 0.8)',  // Bootstrap danger color
+                    borderRadius: 5,
+                }
+            ]
+        },
+        options: {
+            indexAxis: 'y', // makes the bar chart horizontal
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        font: {
+                            size: 14,
+                            weight: '600'
+                        }
+                    }
+                },
+                tooltip: {
+                    mode: 'nearest',
+                    intersect: false
+                }
+            },
+            scales: {
+                x: {
+                    stacked: true, // stack the bars horizontally
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1,
+                        font: {
+                            size: 13
+                        }
+                    },
+                    grid: {
+                        color: '#e9ecef'
+                    }
+                },
+                y: {
+                    stacked: true, // stack the bars vertically
+                    ticks: {
+                        font: {
+                            size: 13,
+                            weight: '600'
+                        },
+                        color: '#212529'
+                    },
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        }
+    });
+</script>
